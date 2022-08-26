@@ -45,6 +45,9 @@ static const uint128_t VERSION_HEAD(0, 0xffffffffffffffffull);
  */
 struct ObjectVersion
 {
+    /** Default copy constructor. Needed for a 'trivially copyable' type. */
+    ObjectVersion(ObjectVersion const&) = default;
+
     /** Construct a new, zero-initialized object version. @version 1.0 */
     CO_API ObjectVersion();
 
@@ -111,7 +114,7 @@ inline std::ostream& operator<<(std::ostream& os, const ObjectVersion& ov)
 {
     return os << "id " << ov.identifier << " v" << ov.version;
 }
-}
+} // namespace co
 
 namespace std
 {
@@ -126,5 +129,5 @@ struct hash<co::ObjectVersion>
                                 hash_value(key.identifier));
     }
 };
-}
+} // namespace std
 #endif // CO_OBJECT_H
